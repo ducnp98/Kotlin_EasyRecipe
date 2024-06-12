@@ -1,6 +1,5 @@
 package com.example.kotlineasyrecipe.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -22,9 +21,7 @@ class MostPopularAdapter() : RecyclerView.Adapter<MostPopularAdapter.PopularMeal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealViewHolder {
-        return PopularMealViewHolder(PopularItemBinding.inflate(LayoutInflater.from(parent.context), parent,false
-        )
-        )
+        return PopularMealViewHolder(PopularItemBinding.inflate(LayoutInflater.from(parent.context), parent,false))
     }
 
     fun setMeals(mealList: ArrayList<CategoryMeal>) {
