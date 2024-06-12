@@ -1,20 +1,21 @@
 package com.example.kotlineasyrecipe.activities
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.kotlineasyrecipe.R
 import com.example.kotlineasyrecipe.databinding.ActivityMealBinding
+import com.example.kotlineasyrecipe.db.MealDatabase
 import com.example.kotlineasyrecipe.fragments.HomeFragment
 import com.example.kotlineasyrecipe.models.Meal
 import com.example.kotlineasyrecipe.viewModel.MealDetailModel
+import com.example.kotlineasyrecipe.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealBinding;
@@ -28,7 +29,10 @@ class MealActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mealDetailMvvm = ViewModelProvider(this)[MealDetailModel::class.java]
+
+        val mealDatabase = MealDatabase.getInstance(this)
+        val viewModelFactory = MealViewModelFactory(mealDatabase)
+        mealDetailMvvm = ViewModelProvider(this, viewModelFactory)[MealDetailModel::class.java]
 
         getMealFromHome()
         setInformationMeal()
@@ -36,6 +40,7 @@ class MealActivity : AppCompatActivity() {
         mealDetailMvvm.getMealDetail(idMeal)
         observeMealDetail()
         onYoutubeImageClick()
+        onFavoriteClick()
 
     }
 
@@ -94,5 +99,14 @@ class MealActivity : AppCompatActivity() {
         binding.collapsingToolBar.setExpandedTitleColor(resources.getColor(R.color.white))
         binding.collapsingToolBar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         binding.collapsingToolBar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar)
+    }
+
+    private fun onFavoriteClick () {
+        binding.icFavorite.setOnClickListener {
+            mealDetail.let {
+                mealDetailMvvm.insertMeal(it)
+                Toast.makeText(this, "Meal save", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

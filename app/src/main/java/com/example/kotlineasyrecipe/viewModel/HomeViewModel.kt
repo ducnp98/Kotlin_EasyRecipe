@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlineasyrecipe.db.MealDatabase
 import com.example.kotlineasyrecipe.models.Category
 import com.example.kotlineasyrecipe.models.CategoryList
 import com.example.kotlineasyrecipe.models.CategoryMeal
@@ -15,10 +16,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private var mealDatabase: MealDatabase) : ViewModel() {
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var randomPopularItemLiveData = MutableLiveData<List<CategoryMeal>>()
     private var categoryListLiveData = MutableLiveData<List<Category>>()
+    private var favoriteMeal = mealDatabase.mealDap().getAllMeals()
     fun getRandomMeal() {
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -79,5 +81,9 @@ class HomeViewModel : ViewModel() {
 
     fun observeCategoryListLiveData(): LiveData<List<Category>> {
         return categoryListLiveData
+    }
+
+    fun observeFavoriteMealLiveData(): LiveData<List<Meal>> {
+        return favoriteMeal
     }
 }
