@@ -1,5 +1,6 @@
 package com.example.kotlineasyrecipe.retrofit;
 
+import com.example.kotlineasyrecipe.models.CategoryList
 import com.example.kotlineasyrecipe.models.Meal
 import com.example.kotlineasyrecipe.models.MealList;
 
@@ -13,4 +14,8 @@ interface MealApi {
 
     @GET("lookup.php?")
     fun getRandomMealDetail(@Query("i") id: String): Call<MealList>
+
+    @GET("filter.php?")
+    fun getPopularItem(@Query("c") c: String): Call<CategoryList>
+
 }
