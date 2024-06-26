@@ -2,14 +2,14 @@ package com.example.kotlineasyrecipe.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.example.kotlineasyrecipe.R
 import com.example.kotlineasyrecipe.activities.CategoryMealsActivity
 import com.example.kotlineasyrecipe.activities.MainActivity
 import com.example.kotlineasyrecipe.activities.MealActivity
@@ -20,7 +20,6 @@ import com.example.kotlineasyrecipe.models.Category
 import com.example.kotlineasyrecipe.models.CategoryMeal
 import com.example.kotlineasyrecipe.models.Meal
 import com.example.kotlineasyrecipe.viewModel.HomeViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
@@ -65,6 +64,10 @@ class HomeFragment : Fragment() {
         fetchingCategoryList()
 
         onPopularItemClick()
+
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun preparePopularMealAdapter() {
