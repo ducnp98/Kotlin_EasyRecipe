@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import com.example.kotlineasyrecipe.models.Category
 import com.example.kotlineasyrecipe.models.CategoryMeal
 import com.example.kotlineasyrecipe.models.Meal
 import com.example.kotlineasyrecipe.viewModel.HomeViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
@@ -89,6 +91,11 @@ class HomeFragment : Fragment() {
             intent.putExtra(MEAL_NAME, meal.strMeal)
             intent.putExtra(MEAL_THUMB, meal.strMealThumb)
             startActivity(intent)
+        }
+
+        popularMealAdapter.onLongItemClick = {meal ->
+            val mealBottomSheet = BottomSheetFragment.newInstance(mealId = meal.idMeal)
+            mealBottomSheet.show(childFragmentManager, "Meal info")
         }
     }
 

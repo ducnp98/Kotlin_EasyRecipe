@@ -2,6 +2,7 @@ package com.example.kotlineasyrecipe.retrofit;
 
 import com.example.kotlineasyrecipe.models.CategoryList
 import com.example.kotlineasyrecipe.models.CategoryMealList
+import com.example.kotlineasyrecipe.models.Meal
 import com.example.kotlineasyrecipe.models.MealList;
 
 import retrofit2.Call;
@@ -20,4 +21,8 @@ interface MealApi {
    
     @GET("categories.php")
     fun getCategoryList(): Call<CategoryList>
+
+    @GET("lookup.php")
+    fun getMealById(@Query("i") id: String): Call<MealList>
+
 }

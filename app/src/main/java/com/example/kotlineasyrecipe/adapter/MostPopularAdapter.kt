@@ -10,10 +10,20 @@ import com.example.kotlineasyrecipe.models.CategoryMeal
 class MostPopularAdapter() : RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     private var mealList = ArrayList<CategoryMeal>()
     lateinit var onItemClick: ((CategoryMeal) -> Unit)
+    var onLongItemClick: ((CategoryMeal) -> Unit)? = null
 
     override fun onBindViewHolder(holder: PopularMealViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(mealList[position].strMealThumb).into(holder.binding.imgPopular)
-        holder.itemView.setOnClickListener { onItemClick.invoke(mealList[position])}
+        Glide.with(holder.itemView).load(mealList[position].strMealThumb)
+            .into(holder.binding.imgPopular)
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(mealList[position])
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onLongItemClick?.invoke(mealList[position])
+            true
+        }
     }
 
     override fun getItemCount(): Int {

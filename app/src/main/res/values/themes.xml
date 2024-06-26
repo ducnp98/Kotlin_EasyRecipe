@@ -9,8 +9,11 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomDialogTheme</item>
 
     </style>
 
     <style name="Theme.KotlinEasyRecipe" parent="Base.Theme.KotlinEasyRecipe" />
+
+
 </resources>
